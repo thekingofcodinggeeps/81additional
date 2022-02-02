@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Learn Arc</title>
+
+<style type="text/css">
+h1
+{
+	color: red; 
+	font-size: 40px;
+}
+
+#myCanvas
+{
+	border-width:10px;
+	background-color: white; 
+	border-style:ridge;
+}
+span
+{
+	font-size: 20px;
+}
+#select_option
+{
+	width: 200px;
+    height: 20px;
+}
+#radius , #sangle , #eangle
+{
+	display: none;
+}	
+button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 42px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 10px;
+  cursor: pointer;
+}
+input
+{
+	margin:10px;
+}
+span
+{
+	margin:10px;
+}
+b
+{
+	color: red;
+}
+</style>
+
+</head>
+<body>
+<center>
+	<h1>Learn ARC</h1>
+	<h3>Change the values from the dropdown. And choose values from radio button</h3>
+	<canvas id="myCanvas" width="600" height="400">
+	</canvas>
+<br>
+
+<select id="select_option">
+	<option value=""></option>
+	<option value="radius">Radius</option>
+	<option value="startAngle">startAngle</option>
+	<option value="endAngle">endAngle</option>
+</select>
+
+<span id="html_code"></span>
+
+<br>
+<button onclick="get();">Get</button>
+
+	<div id="radius">
+		<input type="radio" name="r" value="50" > 50
+		<br>
+		<input type="radio" name="r" value="60" > 60
+		<br>
+		<input type="radio" name="r" value="70" > 70
+		<br>
+		<button onclick="applyr();">Apply</button>
+	</div>
+
+	<div id="sangle">
+		<input type="radio" name="sa" value="0" > 0
+		<br>
+		<input type="radio" name="sa" value="1" > 1
+		<br>
+		<input type="radio" name="sa" value="2" > 2
+		<br>
+		<input type="radio" name="sa" value="3" > 3
+		<br>
+		<input type="radio" name="sa" value="4" > 4
+		<br>
+		<input type="radio" name="sa" value="5" > 5
+		<br>
+		<button onclick="applysa();">Apply</button>
+	</div>
+
+	<div id="eangle">
+		<input type="radio" name="ea" value="0.5" > 0.5 * Math.PI
+		<br>
+		<input type="radio" name="ea" value="1" > 1 * Math.PI
+		<br>
+		<input type="radio" name="ea" value="2" > 2 * Math.PI
+		<br>
+		<button onclick="applyea();">Apply</button>
+	</div>
+</center>
+<script type="text/javascript">
+    canvas = document.getElementById("myCanvas");
+ctx= canvas.getContext("2d");
+color = "red";
+function get()
+{
+	select_option = document.getElementById("select_option").value;
+	if(select_option == "radius")
+	{
+		document.getElementById("radius").style.display = "block";
+		document.getElementById("sangle").style.display = "none";
+		document.getElementById("eangle").style.display = "none";
+	}
+	if(select_option == "startAngle")
+	{
+		document.getElementById("sangle").style.display = "block";
+		document.getElementById("radius").style.display = "none";
+		document.getElementById("eangle").style.display = "none";
+	}
+	if(select_option == "endAngle")
+	{
+		document.getElementById("eangle").style.display = "block";
+		document.getElementById("radius").style.display = "none";
+		document.getElementById("sangle").style.display = "none";
+	}
+}
+
+function applyr()
+{
+    var ele = document.getElementsByName('r'); 
+    for(i = 0; i < ele.length; i++) 
+    { 
+        if(ele[i].checked) 
+        {
+		r = ele[i].value; 
+	    ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.beginPath();
+		ctx.strokeStyle = color;
+		ctx.lineWidth = 3;
+		ctx.arc(200, 200, r ,0 , 2 * Math.PI);
+		ctx.stroke();
+		document.getElementById("html_code").innerHTML = "ctx.arc(200, 200, <b>"+r+"</b> ,0 , 2 * Math.PI)";
+        }
+    }
+}
+
+function applysa()
+{
+    var ele = document.getElementsByName('sa'); 
+    for(i = 0; i < ele.length; i++) 
+    { 
+        if(ele[i].checked) 
+        {
+		sa = ele[i].value; 
+	    ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.beginPath();
+		ctx.strokeStyle = color;
+		ctx.lineWidth = 3;
+		ctx.arc(200, 200, 40 ,sa , 2 * Math.PI);
+		ctx.stroke();
+		document.getElementById("html_code").innerHTML = "ctx.arc(200, 200, 40 , <b>"+sa+"</b> , 2 * Math.PI)";
+        }
+    }
+}
+
+function applyea()
+{
+    var ele = document.getElementsByName('ea'); 
+    for(i = 0; i < ele.length; i++) 
+    { 
+        if(ele[i].checked) 
+        {
+		ea = ele[i].value; 
+	    ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.beginPath();
+		ctx.strokeStyle = color;
+		ctx.lineWidth = 3;
+		ctx.arc(200, 200, 40 ,0 , ea * Math.PI);
+		ctx.stroke();
+		document.getElementById("html_code").innerHTML = "ctx.arc(200, 200, 40 ,0 , <b>"+ea+"</b> * Math.PI)";
+        }
+    }
+}
+
+</script>
+</body>
+</html>
